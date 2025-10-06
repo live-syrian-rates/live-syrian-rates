@@ -1,25 +1,41 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>أسعار الليرة السورية لحظة بلحظة</title>
-  <meta http-equiv="refresh" content="600">
-  <style>body{font-family:Arial;background:#111;color:#0f0;text-align:center;padding:20px}</style>
+  <meta charset="UTF-8">
+  <title>FCM Token Generator</title>
 </head>
 <body>
-  <h1>🟢 أسعار الليرة السورية لحظة بلحظة</h1>
-  <p id="board">Loading...</p>
-  <p>تحديث تلقائي كل 10 دقائق</p>
+  <h2>Firebase Cloud Messaging Token</h2>
+  <p>Open your browser's console (F12 → Console tab) to get the token.</p>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js"></script>
   <script>
-    fetch('https://raw.githubusercontent.com/live-syrian-rates/live-syrian-rates/main/live_board.json')
-      .then(r => r.json())
-      .then(d => {
-        document.getElementById('board').innerText =
-          `دمشق  ${d.dam_buy} / ${d.dam_sell}  (فارق ${d.spread_dam})\n` +
-          `حلب   ${d.ale_buy} / ${d.ale_sell}  (فارق ${d.spread_ale})\n` +
-          `أونصة الذهب  ${d.gold} $`;
+    // Your Firebase project config
+    const firebaseConfig = {
+      apiKey: "AIzaSyANmR1UrR8aMUag3gNHrFFNmiXMQzekeXg",
+      authDomain: "syrian-currency.firebaseapp.com",
+      projectId: "syrian-currency",
+      storageBucket: "syrian-currency.firebasestorage.app",
+      messagingSenderId: "58493358809",
+      appId: "1:58493358809:web:cfb1c9d70ef3f30e0424c8",
+      measurementId: "G-8G3F9CJT38"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const messaging = firebase.messaging();
+
+    // Your VAPID key
+    messaging.getToken({ vapidKey: "BCE0fhf0V_z4H8-RXP0rF0DDmnAuIkj3wU8u4NHGx2Jw6DZNxnCwt19YiQ5XSQga71jUUD-G8pllS2ODcSKGJXU" })
+      .then(token => {
+        if (token) {
+          console.log("Token:", token); // Copy this token for your server script!
+        } else {
+          console.warn("No registration token available. Request permission to generate one.");
+        }
       })
-      .catch(() => document.getElementById('board').innerText = 'جار التحميل...');
+      .catch(err => {
+        console.error("An error occurred while retrieving token. ", err);
+      });
   </script>
 </body>
 </html>
