@@ -1,23 +1,24 @@
-importScripts('https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js');
+importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js");
+importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js");
 
-firebase.initializeApp({
-  apiKey: "AIzaSyANmR1UrR8aMUag3gNHrFFNmiXMQzekeXg",
-  authDomain: "syrian-currency.firebaseapp.com",
-  projectId: "syrian-currency",
-  storageBucket: "syrian-currency.firebasestorage.app",
-  messagingSenderId: "58493358809",
-  appId: "1:58493358809:web:6eebd63d123855210424c8"
-});
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
 
+firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function(payload) {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+// Optional: handle background messages
+messaging.onBackgroundMessage((payload) => {
+  console.log("[firebase-messaging-sw.js] Received background message ", payload);
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
+    icon: "/favicon.ico"
   };
-
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
