@@ -1,43 +1,25 @@
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/live-syrian-rates/firebase-messaging-sw.js')
-    .then(function(registration) {
-      const messaging = firebase.messaging();
-      if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/live-syrian-rates/firebase-messaging-sw.js')
-  .then((registration) => {
-    const messaging = firebase.messaging();
-    messaging.getToken({
-      vapidKey: 'BCE0fhf0V_z4H8-RXP0rF0DDmnAuIkj3wU8u4NHGx2Jw6DZNxnCwt19YiQ5XSQga71jUUD-G8pllS2ODcSKGJXU',
-      serviceWorkerRegistration: registration,
-    }).then((token) => {
-      if(token) {
-        console.log('FCM Token:', token);
-      } else {
-        console.warn('No registration token available. Request permission.');
-      }
-    }).catch((error) => {
-      console.error('Error getting token', error);
-    });
-  }).catch((error) => {
-    console.error('Service Worker registration failed', error);
-  });
-}
-
-      .then(function(token) {
-        if (token) {
-          console.log('FCM Token:', token);
-        } else {
-          console.warn('No registration token available. Request notification permission.');
-        }
+      .then(function(registration) {
+        const messaging = firebase.messaging();
+        messaging.getToken({
+          vapidKey: 'BCE0fhf0V_z4H8-RXP0rF0DDmnAuIkj3wU8u4NHGx2Jw6DZNxnCwt19YiQ5XSQga71jUUD-G8pllS2ODcSKGJXU',
+          serviceWorkerRegistration: registration,
+        })
+        .then(function(token) {
+          if (token) {
+            console.log('FCM Token:', token);
+          } else {
+            console.warn('No registration token available. Request permission.');
+          }
+        })
+        .catch(function(err) {
+          console.error('Error retrieving FCM token', err);
+        });
       })
       .catch(function(err) {
-        console.error('Error retrieving FCM token', err);
+        console.error('Service worker registration failed', err);
       });
-    })
-    .catch(function(err) {
-      console.error('Service worker registration failed', err);
-    });
   }
 </script>
-
