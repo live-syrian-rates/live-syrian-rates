@@ -3,23 +3,76 @@
 <head>
   <meta charset="utf-8">
   <title>أسعار الليرة السورية لحظة بلحظة</title>
-  <meta http-equiv="refresh" content="600">
-  <style>body{font-family:Arial;background:#111;color:#0f0;text-align:center;padding:20px}</style>
+  <meta http-equiv="refresh" content="10">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #0f0;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 { margin-bottom: 10px; }
+    #board {
+      font-size: 1.4rem;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+    .time { font-size: 0.9rem; color: #aaa; margin-top: 10px; }
+  </style>
 </head>
 <body>
   <h1>🟢 أسعار الليرة السورية لحظة بلحظة</h1>
-  <p id="board">Loading...</p>
-  <p>تحديث تلقائي كل 10 دقائق</p>
+  <p id="board">جار التحميل...</p>
+  <p class="time">تحديث تلقائي كل 10 ثوانٍ</p>
+
   <script>
-    fetch('https://raw.githubusercontent.com/<your-username>/live-syrian-rates/main/live_board.json')
+    // Firebase Config (same as your service worker)
+    const firebaseConfig = {
+      apiKey: "AIzaSyANmR1UrR8aMUag3gNHrFFNmiXMQzekeXg",
+      authDomain: "syrian-currency.firebaseapp.com",
+      projectId: "syrian-currency",
+      storageBucket: "syrian-currency.firebasestorage.app",
+      messagingSenderId: "58493358809",
+      appId: "1:58493358809:web:6eebd63d123855210424c8",
+      measurementId: "G-3HRXN1BZBB"
+    };
+
+    // Initialize Firebase
+    importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js");
+    importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js");
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    // Background message handler
+    messaging.onBackgroundMessage((payload) => {
+      console.log("[firebase-messaging-sw.js] Received background message ", payload);
+      const notificationTitle = payload.notification.title;
+      const notificationOptions = {
+        body: payload.notification.body,
+        icon: "/favicon.ico"
+      };
+      self.registration.showNotification(notificationTitle, notificationOptions);
+    });
+
+    // Auto-refresh every 10 seconds
+    setInterval(() => location.reload(), 10000);
+
+    // Initial load
+    fetch("https://raw.githubusercontent.com/live-syrian-rates/live-syrian-rates/main/live_board.json")
       .then(r => r.json())
-      .then(d => {
-        document.getElementById('board').innerText =
-          `دمشق  ${d.dam_buy} / ${d.dam_sell}  (فارق ${d.spread_dam})\n` +
-          `حلب   ${d.ale_buy} / ${d.ale_sell}  (فارق ${d.spread_ale})\n` +
-          `أونصة الذهب  ${d.gold} $`;
+      .then(data => {
+        document.getElementById('board').textContent =
+          `دمشق  ${data.dam_buy} / ${data.dam_sell}  (فارق ${data.spread_dam})\n` +
+          `حلب   ${data.ale_buy} / ${data.ale_sell}  (فارق ${data.spread_ale})\n` +
+          `أونصة الذهب  ${data.gold} $`;
+        document.querySelector('.time').textContent = `تحديث: ${data.time}`;
       })
-      .catch(() => document.getElementById('board').innerText = 'جار التحميل...');
+      .catch(err => {
+        document.getElementById('board').textContent = "جار التحميل...";
+        console.error(err);
+      });
   </script>
 </body>
 </html>
