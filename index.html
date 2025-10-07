@@ -5,21 +5,8 @@
   <title>أسعار الليرة السورية لحظة بلحظة</title>
   <meta http-equiv="refresh" content="10">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #0f0;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
-    }
-    h1 { margin-bottom: 10px; }
-    #board {
-      font-size: 1.4rem;
-      line-height: 1.6;
-      white-space: pre-line;
-    }
-    .time { font-size: 0.9rem; color: #aaa; margin-top: 10px; }
+    body{font-family:Arial;background:#111;color:#0f0;text-align:center;padding:20px;margin:0}
+    h1{margin-bottom:10px}#board{font-size:1.4rem;line-height:1.6;white-space:pre-line}.time{font-size:0.9rem;color:#aaa;margin-top:10px}
   </style>
 </head>
 <body>
@@ -28,38 +15,6 @@
   <p class="time">تحديث تلقائي كل 10 ثوانٍ</p>
 
   <script>
-    // Firebase Config (same as your service worker)
-    const firebaseConfig = {
-      apiKey: "AIzaSyANmR1UrR8aMUag3gNHrFFNmiXMQzekeXg",
-      authDomain: "syrian-currency.firebaseapp.com",
-      projectId: "syrian-currency",
-      storageBucket: "syrian-currency.firebasestorage.app",
-      messagingSenderId: "58493358809",
-      appId: "1:58493358809:web:6eebd63d123855210424c8",
-      measurementId: "G-3HRXN1BZBB"
-    };
-
-    // Initialize Firebase
-    importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js");
-    importScripts("https://www.gstatic.com/firebasejs/9.22.1/firebase-messaging-compat.js");
-    firebase.initializeApp(firebaseConfig);
-    const messaging = firebase.messaging();
-
-    // Background message handler
-    messaging.onBackgroundMessage((payload) => {
-      console.log("[firebase-messaging-sw.js] Received background message ", payload);
-      const notificationTitle = payload.notification.title;
-      const notificationOptions = {
-        body: payload.notification.body,
-        icon: "/favicon.ico"
-      };
-      self.registration.showNotification(notificationTitle, notificationOptions);
-    });
-
-    // Auto-refresh every 10 seconds
-    setInterval(() => location.reload(), 10000);
-
-    // Initial load
     fetch("https://raw.githubusercontent.com/live-syrian-rates/live-syrian-rates/main/live_board.json")
       .then(r => r.json())
       .then(data => {
