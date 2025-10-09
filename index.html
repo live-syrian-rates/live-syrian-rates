@@ -15,17 +15,20 @@
   <p class="time">تحديث تلقائي كل 10 ثوانٍ</p>
 
   <script>
-    fetch("https://raw.githubusercontent.com/live-syrian-rates/live-syrian-rates/main/live_board.json")
+    fetch("https://live-syrian-rates.github.io/live-syrian-rates/live_board.json")
       .then(r => r.json())
       .then(data => {
+        const d = data.cities.damascus;
+        const a = data.cities.aleppo;
+        const g = data.gold || "—";
         document.getElementById('board').textContent =
-          `دمشق  ${data.dam_buy} / ${data.dam_sell}  (فارق ${data.spread_dam})\n` +
-          `حلب   ${data.ale_buy} / ${data.ale_sell}  (فارق ${data.spread_ale})\n` +
-          `أونصة الذهب  ${data.gold} $`;
-        document.querySelector('.time').textContent = `تحديث: ${data.time}`;
+          `دمشق  ${d.buy} / ${d.sell}  (فارق ${d.spread})\n` +
+          `حلب   ${a.buy} / ${a.sell}  (فارق ${a.spread})\n` +
+          `أونصة الذهب  ${g} $`;
+        document.querySelector('.time').textContent = `تحديث: ${data.timestamp}`;
       })
       .catch(err => {
-        document.getElementById('board').textContent = "جار التحميل...";
+        document.getElementById('board').textContent = "خطأ في التحميل";
         console.error(err);
       });
   </script>
