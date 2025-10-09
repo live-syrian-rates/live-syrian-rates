@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-10-09T12:21:04Z",
+  "timestamp": "2025-10-09T12:38:42Z",
   "cities": {
     "damascus": {
-      "buy": 11500,
-      "sell": 11550,
+      "buy": 11480,
+      "sell": 11530,
       "spread": 50
     },
     "aleppo": {
-      "buy": 11500,
-      "sell": 11550,
+      "buy": 11480,
+      "sell": 11530,
       "spread": 50
     }
   }
