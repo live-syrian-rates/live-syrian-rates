@@ -1,16 +1,31 @@
 {
-  "timestamp": "2025-10-10T12:25:47Z",
+  "timestamp": "2025-10-10T18:50:44Z",
   "cities": {
     "damascus": {
-      "buy": 11480,
-      "sell": 11530,
-      "spread": 50
+      "usd": {
+        "buy": 11480,
+        "sell": 11530,
+        "spread": 50
+      },
+      "euro": {
+        "buy": 13308,
+        "sell": 13308,
+        "spread": 0
+      }
     },
     "aleppo": {
-      "buy": 11480,
-      "sell": 11530,
-      "spread": 50
+      "usd": {
+        "buy": 11480,
+        "sell": 11530,
+        "spread": 50
+      },
+      "euro": {
+        "buy": 13308,
+        "sell": 13308,
+        "spread": 0
+      }
     }
   },
-  "gold_oz": 3989.8
+  "gold_oz": 3998.66,
+  "bitcoin_oz": 117424.0
 }
