@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-10-09T20:54:05Z",
+  "timestamp": "2025-10-10T12:25:47Z",
   "cities": {
     "damascus": {
       "buy": 11480,
@@ -11,5 +11,6 @@
       "sell": 11530,
       "spread": 50
     }
-  }
+  },
+  "gold_oz": 3989.8
 }
