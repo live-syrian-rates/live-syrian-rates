@@ -16,22 +16,30 @@
   <p class="time">تحديث تلقائي كل 10 ثوانٍ</p>
 
   <script>
-       fetch("https://live-syrian-rates.github.io/live-syrian-rates/live_board.json")
-      .then(r => r.json())
-      .then(data => {
-        const d = data.cities.damascus;
-        const a = data.cities.aleppo;
-        const g = data.gold || "—";
-        document.getElementById('board').textContent =
-          `دمشق  ${d.buy} / ${d.sell}  (فارق ${d.spread})\n` +
-          `حلب   ${a.buy} / ${a.sell}  (فارق ${a.spread})\n` +
-          `أونصة الذهب  ${g} $`;
-        document.querySelector('.time').textContent = `تحديث: ${data.timestamp}`;
-      })
-      .catch(err => {
-        document.getElementById('board').textContent = "خطأ في التحميل";
-        console.error(err);
-      });
+ <script>
+  fetch("https://live-syrian-rates.github.io/live-syrian-rates/live_board.json")
+    .then(r => r.json())
+    .then(data => {
+      const d = data.cities.damascus.usd;
+      const a = data.cities.aleppo.usd;
+      const o = data.cities.damascus.euro;
+      const c = data.cities.aleppo.euro;
+      const g = data.gold_oz   || "—";
+      const q = data.bitcoin_oz || "—";
+      document.getElementById('board').textContent =
+        `دمشق  USD ${d.buy} / ${d.sell}  (فارق ${d.spread})\n` +
+        `حلب   USD ${a.buy} / ${a.sell}  (فارق ${a.spread})\n` +
+        `دمشق  EUR ${o.buy} / ${o.sell}  (فارق ${o.spread})\n` +
+        `حلب   EUR ${c.buy} / ${c.sell}  (فارق ${c.spread})\n` +
+        `أونصة الذهب  ${g} USD\n` +
+        `أونصة البيتكوين  ${q} USD`;
+      document.querySelector('.time').textContent = `تحديث: ${data.timestamp}`;
+    })
+    .catch(err => {
+      document.getElementById('board').textContent = "خطأ في التحميل";
+      console.error(err);
+    });
+</script>
   </script>
 </body>
 </html>
