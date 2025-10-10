@@ -15,7 +15,7 @@
   <p class="time">تحديث تلقائي كل 10 ثوانٍ</p>
 
   <script>
-    fetch("https://live-syrian-rates.github.io/live-syrian-rates/live_board.json")
+       fetch("https://live-syrian-rates.github.io/live-syrian-rates/live_board.json")
       .then(r => r.json())
       .then(data => {
         const d = data.cities.damascus;
