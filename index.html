@@ -14,9 +14,7 @@
   <h1>🟢 أسعار الليرة السورية لحظة بلحظة</h1>
   <p id="board">جار التحميل...</p>
   <p class="time">تحديث تلقائي كل 10 ثوانٍ</p>
-
-  <script>
- <script>
+<script>
   fetch("https://live-syrian-rates.github.io/live-syrian-rates/live_board.json")
     .then(r => r.json())
     .then(data => {
@@ -39,7 +37,6 @@
       document.getElementById('board').textContent = "خطأ في التحميل";
       console.error(err);
     });
-</script>
   </script>
 </body>
 </html>
